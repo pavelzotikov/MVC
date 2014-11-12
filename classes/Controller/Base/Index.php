@@ -1,7 +1,6 @@
-<?php
+<?php defined('DOCROOT') OR die('No direct script access.');
 
-class Controller_Base_Index
-{
+class Controller_Base_Index {
 
     public $view;
     public $template;

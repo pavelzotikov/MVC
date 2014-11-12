@@ -1,13 +1,12 @@
-<?php
+<?php defined('DOCROOT') OR die('No direct script access.');
 
-class View
-{
+class View {
 
     public static function render($filename, array $date = NULL)
     {
         ob_start();
 
-        extract($date, EXTR_SKIP);
+        if ($date !== NULL) extract($date, EXTR_SKIP);
         include DOCROOT . 'classes/views/' . $filename . '.phtml';
 
         return ob_get_clean();

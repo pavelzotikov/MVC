@@ -1,4 +1,4 @@
-<?php
+<?php defined('DOCROOT') OR die('No direct script access.');
 
 header("Content-Type: text/html; charset=utf-8");
 

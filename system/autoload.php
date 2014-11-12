@@ -1,4 +1,4 @@
-<?php
+<?php defined('DOCROOT') OR die('No direct script access.');
 
 spl_autoload_register('autoload');
 
