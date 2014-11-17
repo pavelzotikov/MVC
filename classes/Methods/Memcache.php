@@ -1,6 +1,7 @@
 <?php defined('DOCROOT') or die('No direct script access.');
 
-class Methods_Memcache extends Memcache {
+class Methods_Memcache extends Memcache
+{
 
     public static function instance()
     {

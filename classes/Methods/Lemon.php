@@ -1,6 +1,7 @@
 <?php defined('DOCROOT') or die('No direct script access.');
 
-class Methods_Lemon {
+class Methods_Lemon
+{
 
     protected $backend;
     protected $flags;
@@ -28,7 +29,7 @@ class Methods_Lemon {
             $expired = false;
 
             foreach ($value['tags'] as $tag => $tag_stored_value) {
-                $tag_current_value = $this->get_tag_value ($tag);
+                $tag_current_value = $this->get_tag_value($tag);
 
                 if ($tag_current_value != $tag_stored_value) {
                     $expired = true;
@@ -44,10 +45,10 @@ class Methods_Lemon {
 
     public function delete_tag($tag)
     {
-        $key = "tag_".$tag;
+        $key = "tag_" . $tag;
         $this->get_tag_value($tag);
 
-        $this->set($key, microtime(true), NULL, 60*60*24*30);
+        $this->set($key, microtime(true), NULL, 60 * 60 * 24 * 30);
 
         return true;
     }
@@ -60,7 +61,7 @@ class Methods_Lemon {
 
         if ($tag_value === NULL) {
             $tag_value = microtime(true);
-            $this->set($key, $tag_value, NULL, 60*60*24*30);
+            $this->set($key, $tag_value, NULL, 60 * 60 * 24 * 30);
         }
 
         return $tag_value;
@@ -87,7 +88,8 @@ class Methods_Lemon {
         return $this->backend->set($id, $key, $this->flags, $lifetime);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         if ($id == TRUE) return $this->backend->flush();
         return $this->backend->delete($id);
     }

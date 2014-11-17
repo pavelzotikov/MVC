@@ -1,6 +1,7 @@
 <?php defined('DOCROOT') or die('No direct script access.');
 
-class Methods_Redis extends Redis {
+class Methods_Redis extends Redis
+{
 
     public static function instance()
     {

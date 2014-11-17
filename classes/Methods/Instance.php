@@ -1,6 +1,7 @@
 <?php defined('DOCROOT') or die('No direct script access.');
 
-class Methods_Instance {
+class Methods_Instance
+{
 
     protected static $_instance;
 
@@ -23,10 +24,10 @@ class Methods_Instance {
      */
     public function get($classPath, $fullclassname = false)
     {
-        if (!$fullclassname) $classPath = 'Methods_'.ucfirst($classPath);
+        if (!$fullclassname) $classPath = 'Methods_' . ucfirst($classPath);
         if (!class_exists($classPath)) throw new Exception("Class {$classPath} not exists!");
 
-        if ( array_key_exists($classPath, self::$_class_instances) ) {
+        if (array_key_exists($classPath, self::$_class_instances)) {
             return self::$_class_instances[$classPath];
         } else {
             self::$_class_instances[$classPath] = New $classPath();

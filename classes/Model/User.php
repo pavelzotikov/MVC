@@ -1,6 +1,7 @@
 <?php defined('DOCROOT') OR die('No direct script access.');
 
-class Model_User {
+class Model_User
+{
 
     public $id;
 

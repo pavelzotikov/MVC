@@ -2,6 +2,10 @@
 
 spl_autoload_register('autoload');
 
-function autoload($className) {
-    include DOCROOT . 'classes/' . str_replace('_', '/', $className) . '.php';
+function autoload($className)
+{
+    $className = str_replace('_', '/', $className);
+    $user_class_file = DOCROOT . "classes/$className.php";
+    $system_class_file = DOCROOT . "system/classes/$className.php";
+    include(is_file($user_class_file) ? $user_class_file : $system_class_file);
 }

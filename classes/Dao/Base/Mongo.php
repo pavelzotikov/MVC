@@ -1,28 +1,29 @@
 <?php defined('DOCROOT') or die('No direct script access.');
 
-class Dao_Base_Mongo {
+class Dao_Base_Mongo
+{
 
-    const INSERT  = 1;
-    const UPDATE  = 2;
-    const SELECT  = 3;
-    const REMOVE  = 4;
-    const SAVE    = 5;
-    const DROP    = 6;
+    const INSERT = 1;
+    const UPDATE = 2;
+    const SELECT = 3;
+    const REMOVE = 4;
+    const SAVE = 5;
+    const DROP = 6;
 
     protected $cache_key = 'Dao_Base_Mongo';
 
     static $orders = array(
-        'ASC'  => 1,
+        'ASC' => 1,
         'DESC' => -1
     );
 
 
     protected $operations = array(
-        '='  => '$eq',
+        '=' => '$eq',
         '!=' => '$ne',
-        '<'  => '$lt',
+        '<' => '$lt',
         '<=' => '$lte',
-        '>'  => '$gt',
+        '>' => '$gt',
         '>=' => '$gte',
         'IN' => '$in',
         'NOT IN' => '$nin',
@@ -30,66 +31,66 @@ class Dao_Base_Mongo {
 
     protected $db = '';
 
-    protected $lifetime  = 0;
+    protected $lifetime = 0;
     protected $keycached = null;
     protected $tagcached = null;
 
-    protected $limit  = 0;
+    protected $limit = 0;
     protected $offset = 0;
     protected $order_by = array();
     protected $fields = array();
-    protected $where  = array();
+    protected $where = array();
 
     private $action;
+    private $collection;
 
-    public $collection;
-    public $collection_name;
+    protected $collection_name;
 
-    public static function select($collection)
+    public static function select($collection = NULL)
     {
         $self = new static();
         $self->action = self::SELECT;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
-    public static function insert($collection)
+    public static function insert($collection = NULL)
     {
         $self = new static();
         $self->action = self::INSERT;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
-    public static function update($collection)
+    public static function update($collection = NULL)
     {
         $self = new static();
         $self->action = self::UPDATE;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
-    public static function save($collection)
+    public static function save($collection = NULL)
     {
         $self = new static();
         $self->action = self::SAVE;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
-    public static function remove($collection)
+    public static function remove($collection = NULL)
     {
         $self = new static();
         $self->action = self::REMOVE;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
-    public static function drop($collection)
+    public static function drop($collection = NULL)
     {
         $self = new static();
         $self->action = self::DROP;
-        $self->collection_name = $collection;
+        if ($collection) $self->collection_name = $collection;
         return $self;
     }
 
@@ -130,7 +131,7 @@ class Dao_Base_Mongo {
     public function cached($seconds, $key = null, $tag = null)
     {
         $this->lifetime = $seconds;
-        if ($key) $this->keycached = $this->cache_key .':'. $key;
+        if ($key) $this->keycached = $this->cache_key . ':' . $key;
         if ($tag) $this->tagcached = $tag;
         return $this;
     }
@@ -141,7 +142,7 @@ class Dao_Base_Mongo {
         $lemon = Methods_Lemon::instance();
 
         if ($key) {
-            $key = $this->cache_key .':'. $key;
+            $key = $this->cache_key . ':' . $key;
             $lemon->delete($key);
         }
 
@@ -152,7 +153,7 @@ class Dao_Base_Mongo {
 
     private function getCacheKey()
     {
-        return 'db:'   . $this->db .
+        return 'db:' . $this->db .
         ':c:' . $this->collection_name .
         ':w:' . json_encode($this->where) .
         ':l:' . $this->limit .
@@ -191,7 +192,7 @@ class Dao_Base_Mongo {
             if ($this->order_by) $find->sort($this->order_by);
 
             $select = array();
-            foreach($find as $key => $value) $select[$key] = $value;
+            foreach ($find as $key => $value) $select[$key] = $value;
 
             if ($select && $this->limit === 1) $select = current($select);
 
