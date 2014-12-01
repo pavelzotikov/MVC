@@ -1,0 +1,39 @@
+#!/usr/bin/env php
+<?php
+
+$values = array();
+
+for ($i = 1; $i < $_SERVER['argc']; $i++) {
+
+    if ( !isset($_SERVER['argv'][$i])) break;
+
+    $opt = $_SERVER['argv'][$i];
+
+    if (substr($opt, 0, 2) !== '--') {
+        $values[] = $opt;
+        continue;
+    }
+
+    $opt = substr($opt, 2);
+
+    if (strpos($opt, '=')) {
+        list ($opt, $value) = explode('=', $opt, 2);
+    } else {
+        $value = NULL;
+    }
+
+    $values[$opt] = $value;
+}
+
+if (isset($values['task'])) {
+
+    define('DOCROOT', realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
+    include "autoload.php";
+
+    $class = 'Task_' . ucfirst($values['task']);
+
+    if (class_exists($class)) {
+        $self = new $class();
+        $self->execute($values);
+    }
+}

@@ -11,4 +11,6 @@ class Date
     const MINUTE = 60;
     const ZERO = 0;
 
+    public static $timestamp_format = 'Y-m-d H:i:s';
+
 }

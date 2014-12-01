@@ -1,21 +1,16 @@
 <?php defined('DOCROOT') OR die('No direct script access.');
 
-class Controller_Base_Index
+class Controller_Base_Index extends Controller
 {
 
-    public $view;
-    public $template;
-
-    public function __construct()
+    protected function before()
     {
-        $this->view = $this->template = json_decode('{}');
-        $this->template->file = 'index';
-        $this->template->content = '';
+        parent::before();
     }
 
-    public function __destruct()
+    protected function after()
     {
-        echo View::render($this->template->file, array('content' => $this->template->content));
+        parent::after();
     }
 
 }

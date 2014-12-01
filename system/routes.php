@@ -32,7 +32,7 @@ foreach ($routes as $route => $item) {
             array_shift($matches);
 
             foreach ($matches as $key => $value) {
-                Request::$params[$item['params'][$key]] = $value;
+                $params[$item['params'][$key]] = $value;
             }
 
             $action = 'action_' . $item['action'];
@@ -45,9 +45,18 @@ foreach ($routes as $route => $item) {
 
 if ($controller && $action) {
 
+    Request::getInstance()->params = $params;
     include DOCROOT . "classes/" . str_replace('_', '/', $controller) . ".php";
-    $class = new $controller();
-    if ($params) $class::$params = $params;
-    echo $class->$action();
+    try {
+        $class = new $controller();
+        $class->action = $action;
+        echo $class->execute();
+    } catch (Exception $e) {
+        echo sprintf('%s [ %s ]: %s ~ %s [ %d ]',
+            get_class($e), $e->getCode(), strip_tags($e->getMessage()), $e->getFile(), $e->getLine());
+    }
 
-} else echo View::render('errors/404');
+} else {
+    header("HTTP/1.0 404 Not Found");
+    echo View::render('errors/404');
+}

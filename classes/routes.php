@@ -5,9 +5,9 @@ $routes = array(
         'controller' => 'index',
         'action' => 'index'
     ),
-    'user/{int}' => array(
+    /*'user/{int}' => array(
         'controller' => 'index',
         'action' => 'index',
         'params' => array('id')
-    ),
+    ),*/
 );

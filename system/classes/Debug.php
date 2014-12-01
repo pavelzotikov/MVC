@@ -5,8 +5,7 @@ class Debug
 
     public static function vars()
     {
-        if (func_num_args() === 0)
-            return;
+        if (func_num_args() === 0) return;
 
         // Get all passed variables
         $variables = func_get_args();
