@@ -4,7 +4,7 @@ class Dao_User extends Dao_Base_Mongo
 {
 
     protected $cache_key = 'Dao_User';
-    protected $db = 'pavelzotikov';
+    protected $db = 'db';
     protected $collection_name = 'users';
 
 }

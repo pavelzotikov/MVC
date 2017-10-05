@@ -11,7 +11,7 @@ class Methods_Redis extends Redis
     public function __construct()
     {
         $this->pconnect('127.0.0.1', 6379);
-        $this->auth('21gJs32hv3ks');
+        // $this->auth('');
         $this->select(0);
     }
 
